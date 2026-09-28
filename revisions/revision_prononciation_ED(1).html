@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Révision - Prononciation de ED</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#f2f4f7;font-family:Arial,sans-serif;color:#202124}
+.container{max-width:1050px;margin:auto;background:#fff;border-radius:18px;padding:24px;box-shadow:0 4px 20px #0002}
+h1{text-align:center;margin:0 0 8px}
+.subtitle{text-align:center;color:#666;margin-bottom:20px}
+.toolbar{position:sticky;top:8px;z-index:10;background:#fff;padding:12px 0;border-bottom:1px solid #ddd;margin-bottom:12px}
+button{border:0;border-radius:10px;padding:12px 17px;font-size:15px;cursor:pointer;background:#222;color:#fff;margin-right:7px}
+button:hover{opacity:.85}
+#score{font-weight:bold}
+#message{margin-top:10px;font-weight:bold}
+table{width:100%;border-collapse:collapse}
+th{background:#eef0f2;text-align:left;padding:12px;position:sticky;top:79px;z-index:5}
+td{padding:11px;border-bottom:1px solid #e3e3e3;vertical-align:middle}
+td:first-child{width:45px;text-align:center;color:#777}
+td:nth-child(2){width:48%;font-weight:600}
+input{width:100%;padding:11px;border:2px solid #c7c9cc;border-radius:9px;font-size:16px}
+input.correct{border-color:#1f9d55;background:#e9f8ee}
+input.wrong{border-color:#d93025;background:#fdeceb}
+.answer{font-size:14px;font-weight:bold}
+.answer.correct{color:#16803c}
+.answer.wrong{color:#c5221f}
+.tag{display:inline-block;padding:4px 8px;border-radius:8px;background:#f1f3f4;font-weight:bold}
+@media(max-width:700px){
+ body{padding:8px}.container{padding:12px}
+ td,th{padding:8px 5px}
+ td:nth-child(2){width:42%}
+ input{font-size:14px;padding:9px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🇬🇧 Révision : la prononciation de « -ed »</h1>
+<div class="subtitle">Complète les réponses. Tu peux corriger les réponses rouges autant de fois que tu veux. La correction officielle oblige à recommencer.</div>
+
+<div class="toolbar">
+  <button onclick="validateAll()">✓ Valider mes réponses</button>
+  <button id="correctionBtn" onclick="showCorrection()">👁 Afficher la correction</button>
+  <button id="restartBtn" onclick="resetQuiz()" style="display:none">↻ Recommencer</button>
+  <span id="score"></span>
+  <div id="message"></div>
+</div>
+
+<table>
+<thead><tr><th>#</th><th>Question</th><th>Ta réponse</th><th>Correction</th></tr></thead>
+<tbody id="quiz"></tbody>
+</table>
+</div>
+
+<script>
+const questions=[
+["Comment se prononce « -ed » lorsque le verbe non conjugué se termine par le son [t] ou [d] ?","/id/"],
+["Donne un exemple de verbe en « -ed » qui se prononce /id/.","created"],
+["Comment se prononce « -ed » lorsque le verbe non conjugué se termine par le son [p], [k], [f], [s] ou [ʃ] ?","/t/"],
+["Donne un exemple de verbe en « -ed » qui se prononce /t/.","asked"],
+["Comment se prononce « -ed » dans tous les autres cas ?","/d/"],
+["Donne un exemple de verbe en « -ed » qui se prononce /d/.","showed"]
+];
+
+function norm(s){
+ return s.toLowerCase().trim().replace(/[’']/g,"'").replace(/\s+/g," ");
+}
+function accepted(user,answer){
+ const u=norm(user);
+ if(answer==="/id/") return ["/id/","id","/ɪd/","ɪd"].includes(u);
+ if(answer==="/t/") return ["/t/","t","/t/"].includes(u);
+ if(answer==="/d/") return ["/d/","d","/d/"].includes(u);
+ return u===norm(answer);
+}
+function build(){
+ const tbody=document.getElementById("quiz");
+ tbody.innerHTML="";
+ questions.forEach((q,i)=>{
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td>${i+1}</td>
+  <td>${q[0]}</td>
+  <td><input id="input-${i}" placeholder="Écris ta réponse"></td>
+  <td class="answer" id="answer-${i}"></td>`;
+  tbody.appendChild(tr);
+ });
+ document.getElementById("score").textContent="";
+ document.getElementById("message").textContent="";
+}
+function validateAll(){
+ let correct=0,filled=0;
+ questions.forEach((q,i)=>{
+  const input=document.getElementById("input-"+i);
+  const ans=document.getElementById("answer-"+i);
+  input.classList.remove("correct","wrong");
+  ans.className="answer";
+  if(input.value.trim()!==""){
+   filled++;
+   if(accepted(input.value,q[1])){
+    correct++; input.classList.add("correct");
+    ans.classList.add("correct"); ans.textContent="✓ Correct";
+   }else{
+    input.classList.add("wrong");
+    ans.classList.add("wrong"); ans.textContent="✗ Faux — modifie et revalide";
+   }
+  }else ans.textContent="";
+ });
+ document.getElementById("score").textContent=`${correct} / ${questions.length} correct`;
+ document.getElementById("message").textContent=filled
+ ? "Les réponses rouges peuvent être modifiées puis revalidées autant de fois que nécessaire."
+ : "Remplis les réponses que tu connais puis valide.";
+}
+function showCorrection(){
+ questions.forEach((q,i)=>{
+  const input=document.getElementById("input-"+i);
+  const ans=document.getElementById("answer-"+i);
+  const ok=accepted(input.value,q[1]);
+  input.classList.remove("correct","wrong");
+  input.classList.add(ok?"correct":"wrong");
+  ans.className="answer "+(ok?"correct":"wrong");
+  ans.textContent=ok?"✓ Correct":`✗ Réponse : ${q[1]}`;
+  input.disabled=true;
+ });
+ document.getElementById("correctionBtn").style.display="none";
+ document.getElementById("restartBtn").style.display="inline-block";
+ document.getElementById("message").textContent="Correction affichée : pour refaire l'exercice, tu dois recommencer.";
+}
+function resetQuiz(){
+ build();
+ document.querySelectorAll("input").forEach(x=>x.disabled=false);
+ document.getElementById("correctionBtn").style.display="inline-block";
+ document.getElementById("restartBtn").style.display="none";
+}
+build();
+</script>
+</body>
+</html>
