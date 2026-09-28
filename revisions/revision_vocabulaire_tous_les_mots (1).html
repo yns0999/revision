@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révision vocabulaire anglais</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f2f4f7;color:#202124;padding:20px}
+.container{max-width:1100px;margin:auto;background:white;border-radius:18px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.10)}
+h1{text-align:center;margin:0 0 8px}
+.subtitle{text-align:center;color:#666;margin-bottom:22px}
+.toolbar{position:sticky;top:10px;z-index:10;background:white;padding:12px 0;border-bottom:1px solid #ddd;margin-bottom:12px}
+button{border:0;border-radius:10px;padding:12px 18px;font-size:16px;cursor:pointer;background:#222;color:white;margin-right:8px}
+button:hover{opacity:.85}
+#score{font-weight:bold;margin-left:8px}
+table{width:100%;border-collapse:collapse}
+th{background:#f0f1f3;text-align:left;padding:12px;position:sticky;top:77px;z-index:5}
+td{padding:9px 10px;border-bottom:1px solid #e5e5e5;vertical-align:middle}
+td:first-child{width:42px;text-align:center;color:#777}
+td:nth-child(2){width:38%;font-weight:600}
+input{width:100%;padding:11px;border:2px solid #c7c9cc;border-radius:9px;font-size:16px;background:white}
+input.correct{border-color:#21a357;background:#e9f8ee;color:#126b31}
+input.wrong{border-color:#d93025;background:#fdeceb;color:#a50e08}
+.answer{font-size:14px;font-weight:bold}
+.answer.correct{color:#16803c}
+.answer.wrong{color:#c5221f}
+#message{margin:10px 0;font-weight:bold}
+@media(max-width:700px){
+ body{padding:8px}.container{padding:12px}
+ th{top:77px}
+ td:nth-child(2){width:35%}
+ td,th{padding:7px 5px}
+ input{font-size:14px;padding:9px}
+ .answer{font-size:12px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🇫🇷 → 🇬🇧 Révision de vocabulaire</h1>
+<div class="subtitle">Tous les mots sont sur la même page : remplis uniquement ceux que tu connais, puis valide.</div>
+
+<div class="toolbar">
+  <button onclick="validateAll()">✓ Valider mes réponses</button>
+  <button id="correctionBtn" onclick="showCorrection()">👁 Afficher la correction</button>
+  <button id="restartBtn" onclick="resetQuiz()" style="display:none">↻ Recommencer</button>
+  <span id="score"></span>
+  <div id="message"></div>
+</div>
+
+<table>
+<thead>
+<tr><th>#</th><th>Français</th><th>Ta réponse en anglais</th><th>Correction</th></tr>
+</thead>
+<tbody id="quiz"></tbody>
+</table>
+</div>
+
+<script>
+const words = [
+["la pelouse","grass"],
+["un mariage","a wedding"],
+["une manifestation, un événement","an event"],
+["une foule","crowd"],
+["une vente aux enchères / une salle des ventes","auction / auction house"],
+["une association caritative","a charity"],
+["un défilé","a parade"],
+["un sommet","a summit"],
+["le classement","standings"],
+["le Parti Travailliste","Labour Party"],
+["la date de sortie","release date"],
+["un pompier","a firefighter"],
+["un anniversaire","an anniversary"],
+["une décennie","decade"],
+["une exposition","exhibition"],
+["un feu d'artifice","fireworks"],
+["un invité","guest"],
+["un feu de forêt","wildfire"],
+["le simple messieurs","men's singles"],
+["un chef","a leader / a boss"],
+["un adversaire","opponent"],
+["la canicule","heatwave"],
+["un enchérisseur","bidder"],
+["(collecter) des fonds","to raise funds"],
+["énorme","huge / giant"],
+["spectaculaire","spectacular / dramatic"],
+["à couper le souffle","breathtaking"],
+["qui bat tous les records","record-breaking"],
+["consacré à","dedicated to"],
+["sans précédent","unprecedented"],
+["prudemment","safely"],
+["avec succès","successfully"],
+["avoir lieu","to take place"],
+["to marry","se marier"],
+["durant (tout)","during"],
+["au début (de l'année...)","early"],
+["à la suite","in a row"],
+["terminer","to complete"],
+["vendre","to sell"],
+["collecter","to collect"],
+["planifier, organiser","to plan / to organize"],
+["accueillir","to host / to welcome"],
+["s'affronter","to face"],
+["être le meilleur de","to top"],
+["assister à","to attend"],
+["atteindre","to reach"],
+["mettre au jour","to update"],
+["évacuer","to evacuate"],
+["s'attendre à","to expect"],
+["battre, vaincre","to defeat"],
+["se passer","to happen"],
+["se rassembler","to gather"],
+["exposer","to display"],
+["vivre, connaître","to experience"],
+["affronter","to face"],
+["voyager","to travel"],
+["éclater","to break out"]
+];
+
+function normalize(s){
+ return s.toLowerCase().trim()
+   .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+   .replace(/[’']/g,"'")
+   .replace(/\s+/g," ");
+}
+
+function accepted(user, answer){
+ return answer.split("/").some(x => normalize(x) === normalize(user));
+}
+
+function build(){
+ const tbody=document.getElementById("quiz");
+ tbody.innerHTML="";
+ words.forEach((w,i)=>{
+   const tr=document.createElement("tr");
+   tr.innerHTML=`
+     <td>${i+1}</td>
+     <td>${w[0]}</td>
+     <td><input id="input-${i}" placeholder="Écris l'anglais ici"></td>
+     <td class="answer" id="answer-${i}"></td>`;
+   tbody.appendChild(tr);
+ });
+ document.getElementById("score").textContent="";
+ document.getElementById("message").textContent="";
+}
+
+function validateAll(){
+ let correct=0, filled=0;
+ words.forEach((w,i)=>{
+   const input=document.getElementById(`input-${i}`);
+   const answer=document.getElementById(`answer-${i}`);
+   const value=input.value;
+   input.classList.remove("correct","wrong");
+   answer.className="answer";
+
+   if(value.trim()!==""){
+     filled++;
+     if(accepted(value,w[1])){
+       correct++;
+       input.classList.add("correct");
+       answer.classList.add("correct");
+       answer.textContent="✓ Correct";
+     }else{
+       input.classList.add("wrong");
+       answer.classList.add("wrong");
+       answer.textContent="✗ Faux — tu peux modifier et revalider";
+     }
+   }else{
+     answer.textContent="";
+   }
+ });
+
+ document.getElementById("score").textContent=`${correct} / ${words.length} correct`;
+ document.getElementById("message").textContent =
+   filled===0
+   ? "Remplis les réponses que tu connais, puis valide."
+   : "Tu peux modifier les réponses rouges et cliquer sur « Valider mes réponses » autant de fois que nécessaire. La correction reste cachée.";
+
+ // La correction officielle n'apparaît JAMAIS ici.
+ // Elle ne peut être affichée qu'en cliquant sur le bouton dédié.
+}
+
+function showCorrection(){
+ // Afficher la correction termine la tentative.
+ words.forEach((w,i)=>{
+   const input=document.getElementById(`input-${i}`);
+   const answer=document.getElementById(`answer-${i}`);
+   const value=input.value;
+
+   input.classList.remove("correct","wrong");
+
+   if(value.trim()!=="" && accepted(value,w[1])){
+     input.classList.add("correct");
+     answer.className="answer correct";
+     answer.textContent="✓ Correct";
+   }else{
+     input.classList.add("wrong");
+     answer.className="answer wrong";
+     answer.textContent=`✗ Réponse : ${w[1]}`;
+   }
+
+   input.disabled=true;
+ });
+
+ document.getElementById("correctionBtn").style.display="none";
+ document.getElementById("restartBtn").style.display="inline-block";
+ document.getElementById("message").textContent="Correction affichée. Pour refaire l'exercice, tu dois recommencer.";
+}
+
+function resetQuiz(){
+ build();
+ document.querySelectorAll("input").forEach(x=>x.disabled=false);
+ document.getElementById("correctionBtn").style.display="inline-block";
+ document.getElementById("restartBtn").style.display="none";
+}
+
+build();
+</script>
+</body>
+</html>
