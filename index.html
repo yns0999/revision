@@ -18,7 +18,6 @@
 body {
     margin: 0;
     min-height: 100vh;
-
     font-family: Arial, Helvetica, sans-serif;
 
     background:
@@ -38,20 +37,16 @@ body {
 }
 
 
-/* ==========================================
-   ÉCRAN DU CODE
-========================================== */
+/* ================================
+   CONNEXION
+================================ */
 
 #login {
-
     position: fixed;
-
     inset: 0;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 20px;
@@ -61,9 +56,7 @@ body {
     z-index: 9999;
 }
 
-
 .login-box {
-
     width: min(420px, 100%);
 
     padding: 40px 30px;
@@ -85,33 +78,22 @@ body {
         0 25px 70px rgba(0,0,0,.5);
 }
 
-
 .login-icon {
-
     font-size: 55px;
-
     margin-bottom: 15px;
 }
 
-
 .login-box h1 {
-
     margin: 0 0 10px;
-
     font-size: 30px;
 }
 
-
 .login-box p {
-
     color: #8d9ab4;
-
     margin-bottom: 25px;
 }
 
-
 #codeInput {
-
     width: 100%;
 
     padding: 15px;
@@ -131,18 +113,14 @@ body {
     outline: none;
 }
 
-
 #codeInput:focus {
-
     border-color: #667eea;
 
     box-shadow:
         0 0 0 3px rgba(102,126,234,.15);
 }
 
-
 #loginButton {
-
     width: 100%;
 
     margin-top: 15px;
@@ -169,15 +147,11 @@ body {
     cursor: pointer;
 }
 
-
 #loginButton:hover {
-
     opacity: .9;
 }
 
-
 #error {
-
     min-height: 22px;
 
     margin-top: 15px;
@@ -188,36 +162,26 @@ body {
 }
 
 
-/* ==========================================
-   SITE PRINCIPAL
-========================================== */
+/* ================================
+   SITE
+================================ */
 
 #site {
-
     display: none;
 }
 
-
 header {
-
     padding: 55px 20px 35px;
-
     text-align: center;
 }
 
-
 header h1 {
-
     margin: 0;
-
     font-size: 42px;
-
     font-weight: 800;
 }
 
-
 header p {
-
     margin-top: 12px;
 
     color: #9ba8c4;
@@ -225,9 +189,7 @@ header p {
     font-size: 17px;
 }
 
-
 .container {
-
     width: min(1100px, 92%);
 
     margin: auto;
@@ -236,12 +198,11 @@ header p {
 }
 
 
-/* ==========================================
+/* ================================
    RECHERCHE
-========================================== */
+================================ */
 
 #search {
-
     width: 100%;
 
     padding: 17px 20px;
@@ -261,15 +222,11 @@ header p {
     font-size: 16px;
 }
 
-
 #search::placeholder {
-
     color: #68748d;
 }
 
-
 #search:focus {
-
     border-color: #667eea;
 
     box-shadow:
@@ -277,12 +234,11 @@ header p {
 }
 
 
-/* ==========================================
+/* ================================
    TITRE
-========================================== */
+================================ */
 
 .section-title {
-
     display: flex;
 
     justify-content: space-between;
@@ -292,29 +248,24 @@ header p {
     margin-bottom: 18px;
 }
 
-
 .section-title h2 {
-
     margin: 0;
 
     font-size: 22px;
 }
 
-
 #count {
-
     color: #75819b;
 
     font-size: 14px;
 }
 
 
-/* ==========================================
+/* ================================
    CARTES
-========================================== */
+================================ */
 
 #revisions {
-
     display: grid;
 
     grid-template-columns:
@@ -326,9 +277,7 @@ header p {
     gap: 18px;
 }
 
-
 .card {
-
     padding: 24px;
 
     border-radius: 18px;
@@ -351,9 +300,7 @@ header p {
         box-shadow .2s;
 }
 
-
 .card:hover {
-
     transform: translateY(-5px);
 
     border-color: #6576d8;
@@ -362,17 +309,13 @@ header p {
         0 18px 45px rgba(0,0,0,.4);
 }
 
-
 .icon {
-
     width: 55px;
-
     height: 55px;
 
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     border-radius: 14px;
@@ -389,17 +332,13 @@ header p {
     margin-bottom: 18px;
 }
 
-
 .card h3 {
-
     margin: 0;
 
     font-size: 21px;
 }
 
-
 .card p {
-
     margin: 8px 0 22px;
 
     color: #8e9ab3;
@@ -408,8 +347,11 @@ header p {
 }
 
 
-.start {
+/* ================================
+   BOUTONS
+================================ */
 
+.start {
     display: block;
 
     text-align: center;
@@ -429,16 +371,55 @@ header p {
     transition: .2s;
 }
 
-
 .start:hover {
-
     background: #7180f0;
 }
 
 
-/* ==========================================
+/* ================================
+   PUBLICATION EN COURS
+================================ */
+
+.pending {
+    display: block;
+
+    text-align: center;
+
+    padding: 12px;
+
+    border-radius: 11px;
+
+    background: #3a4050;
+
+    color: #cbd1df;
+
+    font-weight: bold;
+
+    cursor: default;
+}
+
+.pending-icon {
+    display: inline-block;
+
+    animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* ================================
    MESSAGES
-========================================== */
+================================ */
 
 .loading,
 .empty {
@@ -452,14 +433,12 @@ header p {
     color: #7e8ba5;
 }
 
-
 .empty {
 
     border: 1px dashed #303c55;
 
     border-radius: 18px;
 }
-
 
 .empty-icon {
 
@@ -469,24 +448,21 @@ header p {
 }
 
 
-/* ==========================================
+/* ================================
    MOBILE
-========================================== */
+================================ */
 
 @media (max-width: 600px) {
 
     header {
-
         padding-top: 35px;
     }
 
     header h1 {
-
         font-size: 31px;
     }
 
     #revisions {
-
         grid-template-columns: 1fr;
     }
 
@@ -500,9 +476,9 @@ header p {
 <body>
 
 
-<!-- ==========================================
+<!-- ================================
      CONNEXION
-========================================== -->
+================================ -->
 
 <div id="login">
 
@@ -538,9 +514,9 @@ header p {
 </div>
 
 
-<!-- ==========================================
-     PAGE PRINCIPALE
-========================================== -->
+<!-- ================================
+     SITE
+================================ -->
 
 <div id="site">
 
@@ -592,9 +568,10 @@ header p {
 
 <script>
 
-/* ==========================================
+
+/* ================================
    CONFIGURATION
-========================================== */
+================================ */
 
 const USERNAME = "yns0999";
 
@@ -604,32 +581,31 @@ const BRANCH = "main";
 
 const FOLDER = "revisions";
 
-
-/* ==========================================
-   CODE D'ACCÈS
-========================================== */
+const SITE_BASE = "/revision/";
 
 const CODE_ACCES = "2101";
 
 
-/* ==========================================
-   URL DE BASE DU SITE
-========================================== */
+/*
+   Fréquence à laquelle on vérifie
+   si un fichier est devenu disponible.
+*/
 
-const SITE_BASE =
-    "/revision/";
+const CHECK_INTERVAL = 10000;
 
 
-/* ==========================================
+/* ================================
    VARIABLES
-========================================== */
+================================ */
 
 let revisions = [];
 
+let intervalVerification = null;
 
-/* ==========================================
+
+/* ================================
    CONNEXION
-========================================== */
+================================ */
 
 const codeInput =
     document.getElementById("codeInput");
@@ -693,9 +669,9 @@ codeInput.addEventListener(
 );
 
 
-/* ==========================================
-   CHARGER LES RÉVISIONS DEPUIS GITHUB
-========================================== */
+/* ================================
+   CHARGER LES FICHIERS
+================================ */
 
 async function loadRevisions() {
 
@@ -723,7 +699,7 @@ async function loadRevisions() {
         if (!response.ok) {
 
             throw new Error(
-                "Dossier revisions introuvable"
+                "Impossible de récupérer les fichiers."
             );
 
         }
@@ -754,7 +730,18 @@ async function loadRevisions() {
                 });
 
 
+        await verifierTousLesFichiers();
+
+
         afficher(revisions);
+
+
+        /*
+           On continue à vérifier périodiquement
+           les fichiers qui sont encore en attente.
+        */
+
+        demarrerVerification();
 
     }
 
@@ -790,9 +777,124 @@ async function loadRevisions() {
 }
 
 
-/* ==========================================
+/* ================================
+   TESTER SI UN FICHIER EST PUBLIÉ
+================================ */
+
+async function fichierEstPublie(file) {
+
+    const url =
+        SITE_BASE +
+        "revisions/" +
+        encodeURIComponent(file.name);
+
+
+    try {
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method: "HEAD",
+                    cache: "no-store"
+                }
+            );
+
+
+        return response.ok;
+
+    }
+
+    catch {
+
+        return false;
+
+    }
+
+}
+
+
+/* ================================
+   VÉRIFIER TOUS LES FICHIERS
+================================ */
+
+async function verifierTousLesFichiers() {
+
+    await Promise.all(
+
+        revisions.map(
+            async function(file) {
+
+                file.publie =
+                    await fichierEstPublie(file);
+
+            }
+        )
+
+    );
+
+}
+
+
+/* ================================
+   VÉRIFICATION AUTOMATIQUE
+================================ */
+
+function demarrerVerification() {
+
+    if (intervalVerification) {
+
+        clearInterval(
+            intervalVerification
+        );
+
+    }
+
+
+    intervalVerification =
+        setInterval(
+            async function() {
+
+                const enAttente =
+                    revisions.some(
+                        function(file) {
+
+                            return !file.publie;
+
+                        }
+                    );
+
+
+                /*
+                   S'il n'y a plus aucun fichier
+                   en attente, inutile de continuer.
+                */
+
+                if (!enAttente) {
+
+                    clearInterval(
+                        intervalVerification
+                    );
+
+                    return;
+
+                }
+
+
+                await verifierTousLesFichiers();
+
+                afficher(revisions);
+
+            },
+            CHECK_INTERVAL
+        );
+
+}
+
+
+/* ================================
    AFFICHER LES CARTES
-========================================== */
+================================ */
 
 function afficher(files) {
 
@@ -846,9 +948,9 @@ function afficher(files) {
     files.forEach(function(file) {
 
 
-        /* ==============================
-           NOM DU FICHIER
-        ============================== */
+        /* ==========================
+           NOM
+        ========================== */
 
         let nom =
             file.name
@@ -857,14 +959,16 @@ function afficher(files) {
                 .replace(
                     /\b\w/g,
                     function(lettre) {
+
                         return lettre.toUpperCase();
+
                     }
                 );
 
 
-        /* ==============================
+        /* ==========================
            ICÔNE
-        ============================== */
+        ========================== */
 
         let icon = "📖";
 
@@ -921,9 +1025,9 @@ function afficher(files) {
         }
 
 
-        /* ==============================
+        /* ==========================
            CARTE
-        ============================== */
+        ========================== */
 
         const card =
             document.createElement("div");
@@ -932,49 +1036,69 @@ function afficher(files) {
         card.className = "card";
 
 
-        /*
-           IMPORTANT :
-
-           Ton site est :
-
-           /revision/
-
-           Ton fichier est :
-
-           /revision/revisions/anglais.html
-
-           On construit donc le lien
-           avec SITE_BASE.
-        */
-
         const link =
             SITE_BASE +
             "revisions/" +
             encodeURIComponent(file.name);
 
 
-        card.innerHTML = `
+        if (file.publie) {
 
-            <div class="icon">
-                ${icon}
-            </div>
+            card.innerHTML = `
 
-            <h3>
-                ${escapeHTML(nom)}
-            </h3>
+                <div class="icon">
+                    ${icon}
+                </div>
 
-            <p>
-                Clique pour commencer
-            </p>
+                <h3>
+                    ${escapeHTML(nom)}
+                </h3>
 
-            <a
-                class="start"
-                href="${link}"
-            >
-                Commencer →
-            </a>
+                <p>
+                    Révision disponible
+                </p>
 
-        `;
+                <a
+                    class="start"
+                    href="${link}"
+                >
+                    Commencer →
+                </a>
+
+            `;
+
+        }
+
+        else {
+
+            card.innerHTML = `
+
+                <div class="icon">
+                    ${icon}
+                </div>
+
+                <h3>
+                    ${escapeHTML(nom)}
+                </h3>
+
+                <p>
+                    ⏳ GitHub Pages est en train
+                    de publier cette révision.
+                </p>
+
+                <span class="pending">
+
+                    <span class="pending-icon">
+                        ⟳
+                    </span>
+
+                    Publication en cours...
+
+                </span>
+
+            `;
+
+        }
 
 
         container.appendChild(card);
@@ -984,9 +1108,9 @@ function afficher(files) {
 }
 
 
-/* ==========================================
+/* ================================
    RECHERCHE
-========================================== */
+================================ */
 
 document
     .getElementById("search")
@@ -1001,13 +1125,17 @@ document
 
 
             const resultats =
-                revisions.filter(function(file) {
+                revisions.filter(
+                    function(file) {
 
-                    return file.name
-                        .toLowerCase()
-                        .includes(recherche);
+                        return file.name
+                            .toLowerCase()
+                            .includes(
+                                recherche
+                            );
 
-                });
+                    }
+                );
 
 
             afficher(resultats);
@@ -1016,9 +1144,9 @@ document
     );
 
 
-/* ==========================================
-   PROTECTION DU HTML
-========================================== */
+/* ================================
+   PROTECTION HTML
+================================ */
 
 function escapeHTML(text) {
 
