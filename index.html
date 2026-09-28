@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>📚 Révisions</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 0%,
+            #263b72,
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 90% 100%,
+            #3b1f65,
+            transparent 35%
+        ),
+        #080d18;
+
+    color: white;
+}
+
+
+/* =====================================================
+   ÉCRAN DE CODE
+===================================================== */
+
+#login {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: #080d18;
+
+    z-index: 9999;
+}
+
+
+.login-box {
+
+    width: min(420px, 100%);
+
+    padding: 40px 30px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #141d31,
+            #0d1423
+        );
+
+    border: 1px solid #293650;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.5);
+}
+
+
+.login-icon {
+
+    font-size: 55px;
+
+    margin-bottom: 15px;
+}
+
+
+.login-box h1 {
+
+    margin: 0 0 10px;
+
+    font-size: 30px;
+}
+
+
+.login-box p {
+
+    color: #8d9ab4;
+
+    margin-bottom: 25px;
+}
+
+
+#codeInput {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    border: 1px solid #34415d;
+
+    background: #0b1220;
+
+    color: white;
+
+    font-size: 18px;
+
+    text-align: center;
+
+    outline: none;
+}
+
+
+#codeInput:focus {
+
+    border-color: #667eea;
+
+    box-shadow:
+        0 0 0 3px rgba(102,126,234,.15);
+}
+
+
+#loginButton {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+#loginButton:hover {
+
+    opacity: .9;
+}
+
+
+#error {
+
+    min-height: 22px;
+
+    margin-top: 15px;
+
+    color: #ff6b6b;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   SITE PRINCIPAL
+===================================================== */
+
+#site {
+
+    display: none;
+}
+
+
+header {
+
+    padding: 55px 20px 35px;
+
+    text-align: center;
+}
+
+
+header h1 {
+
+    margin: 0;
+
+    font-size: 42px;
+
+    font-weight: 800;
+}
+
+
+header p {
+
+    margin-top: 12px;
+
+    color: #9ba8c4;
+
+    font-size: 17px;
+}
+
+
+.container {
+
+    width: min(1100px, 92%);
+
+    margin: auto;
+
+    padding-bottom: 70px;
+}
+
+
+/* =====================================================
+   RECHERCHE
+===================================================== */
+
+#search {
+
+    width: 100%;
+
+    padding: 17px 20px;
+
+    margin-bottom: 30px;
+
+    border-radius: 14px;
+
+    border: 1px solid #26324a;
+
+    outline: none;
+
+    background: #101827;
+
+    color: white;
+
+    font-size: 16px;
+}
+
+
+#search::placeholder {
+
+    color: #68748d;
+}
+
+
+#search:focus {
+
+    border-color: #667eea;
+
+    box-shadow:
+        0 0 0 3px rgba(102,126,234,.15);
+}
+
+
+/* =====================================================
+   TITRE
+===================================================== */
+
+.section-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+
+.section-title h2 {
+
+    margin: 0;
+
+    font-size: 22px;
+}
+
+
+#count {
+
+    color: #75819b;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   CARTES
+===================================================== */
+
+#revisions {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(260px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+
+.card {
+
+    padding: 24px;
+
+    border-radius: 18px;
+
+    border: 1px solid #26324a;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,35,55,.96),
+            rgba(13,20,34,.96)
+        );
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.25);
+
+    transition:
+        transform .2s,
+        border-color .2s,
+        box-shadow .2s;
+}
+
+
+.card:hover {
+
+    transform: translateY(-5px);
+
+    border-color: #6576d8;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.4);
+}
+
+
+.icon {
+
+    width: 55px;
+
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #667eea,
+            #764ba2
+        );
+
+    font-size: 28px;
+
+    margin-bottom: 18px;
+}
+
+
+.card h3 {
+
+    margin: 0;
+
+    font-size: 21px;
+}
+
+
+.card p {
+
+    margin: 8px 0 22px;
+
+    color: #8e9ab3;
+
+    font-size: 14px;
+}
+
+
+.start {
+
+    display: block;
+
+    text-align: center;
+
+    padding: 12px;
+
+    border-radius: 11px;
+
+    background: #5d6ee8;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+
+.start:hover {
+
+    background: #7180f0;
+}
+
+
+/* =====================================================
+   MESSAGES
+===================================================== */
+
+.loading,
+.empty {
+
+    grid-column: 1 / -1;
+
+    padding: 60px 20px;
+
+    text-align: center;
+
+    color: #7e8ba5;
+}
+
+
+.empty {
+
+    border: 1px dashed #303c55;
+
+    border-radius: 18px;
+}
+
+
+.empty-icon {
+
+    font-size: 45px;
+
+    margin-bottom: 15px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    header {
+
+        padding-top: 35px;
+    }
+
+    header h1 {
+
+        font-size: 31px;
+    }
+
+    #revisions {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     ÉCRAN DE CONNEXION
+===================================================== -->
+
+<div id="login">
+
+    <div class="login-box">
+
+        <div class="login-icon">
+            🔐
+        </div>
+
+        <h1>
+            Mes révisions
+        </h1>
+
+        <p>
+            Entre le code pour accéder aux révisions.
+        </p>
+
+        <input
+            type="password"
+            id="codeInput"
+            placeholder="Code d'accès"
+            autocomplete="off"
+        >
+
+        <button id="loginButton">
+            🔓 Accéder aux révisions
+        </button>
+
+        <div id="error"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SITE
+===================================================== -->
+
+<div id="site">
+
+
+<header>
+
+    <h1>
+        📚 Mon espace de révision
+    </h1>
+
+    <p>
+        Choisis ce que tu veux réviser
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <input
+        type="text"
+        id="search"
+        placeholder="🔎 Rechercher une révision..."
+    >
+
+
+    <div class="section-title">
+
+        <h2>
+            Mes révisions
+        </h2>
+
+        <span id="count"></span>
+
+    </div>
+
+
+    <div id="revisions">
+
+        <div class="loading">
+            Chargement...
+        </div>
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   ⚙️ CONFIGURATION
+===================================================== */
+
+
+/*
+   TON PSEUDO GITHUB
+*/
+
+const USERNAME = "yns0999";
+
+
+/*
+   NOM DE TON DÉPÔT
+*/
+
+const REPOSITORY = "revision";
+
+
+/*
+   BRANCHE GITHUB
+*/
+
+const BRANCH = "main";
+
+
+/*
+   DOSSIER QUI CONTIENT TES RÉVISIONS
+*/
+
+const FOLDER = "revisions";
+
+
+/*
+   🔐 CODE D'ACCÈS
+
+   TU PEUX LE CHANGER ICI.
+
+   Exemple :
+   1234
+*/
+
+const CODE_ACCES = "1234";
+
+
+/* =====================================================
+   CONNEXION
+===================================================== */
+
+const codeInput =
+    document.getElementById("codeInput");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const error =
+    document.getElementById("error");
+
+
+function connexion() {
+
+    if (codeInput.value === CODE_ACCES) {
+
+        document.getElementById("login").style.display =
+            "none";
+
+        document.getElementById("site").style.display =
+            "block";
+
+        loadRevisions();
+
+    }
+
+    else {
+
+        error.textContent =
+            "❌ Code incorrect.";
+
+        codeInput.value = "";
+
+        codeInput.focus();
+
+    }
+
+}
+
+
+loginButton.addEventListener(
+    "click",
+    connexion
+);
+
+
+codeInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if(event.key === "Enter") {
+
+            connexion();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   RÉVISIONS
+===================================================== */
+
+let revisions = [];
+
+
+async function loadRevisions() {
+
+    const container =
+        document.getElementById("revisions");
+
+
+    try {
+
+        const url =
+            `https://api.github.com/repos/${USERNAME}/${REPOSITORY}/contents/${FOLDER}?ref=${BRANCH}`;
+
+
+        const response =
+            await fetch(url);
+
+
+        if(!response.ok) {
+
+            throw new Error(
+                "Impossible de charger les révisions."
+            );
+
+        }
+
+
+        const files =
+            await response.json();
+
+
+        revisions = files
+
+            .filter(file =>
+
+                file.type === "file" &&
+
+                file.name
+                    .toLowerCase()
+                    .endsWith(".html")
+
+            )
+
+            .sort((a,b) =>
+                a.name.localeCompare(b.name)
+            );
+
+
+        afficher(revisions);
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Impossible de charger les révisions
+                </h3>
+
+                <p>
+                    Vérifie que tes fichiers sont
+                    bien dans le dossier
+                    <strong>revisions</strong>.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   AFFICHER LES CARTES
+===================================================== */
+
+function afficher(files) {
+
+    const container =
+        document.getElementById("revisions");
+
+
+    const count =
+        document.getElementById("count");
+
+
+    container.innerHTML = "";
+
+
+    count.textContent =
+        files.length +
+        (
+            files.length > 1
+            ? " révisions"
+            : " révision"
+        );
+
+
+    if(files.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📂
+                </div>
+
+                <h3>
+                    Aucune révision
+                </h3>
+
+                <p>
+                    Ajoute tes fichiers HTML
+                    dans le dossier
+                    <strong>revisions</strong>.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    files.forEach(file => {
+
+
+        let nom =
+            file.name
+
+                .replace(".html", "")
+
+                .replace(/[-_]/g, " ")
+
+                .replace(
+                    /\b\w/g,
+                    lettre =>
+                        lettre.toUpperCase()
+                );
+
+
+        let icon = "📖";
+
+
+        const lower =
+            file.name.toLowerCase();
+
+
+        if(lower.includes("anglais"))
+            icon = "🇬🇧";
+
+        else if(lower.includes("espagnol"))
+            icon = "🇪🇸";
+
+        else if(lower.includes("allemand"))
+            icon = "🇩🇪";
+
+        else if(lower.includes("math"))
+            icon = "🔢";
+
+        else if(lower.includes("histoire"))
+            icon = "📚";
+
+        else if(lower.includes("svt"))
+            icon = "🧬";
+
+        else if(lower.includes("physique"))
+            icon = "⚛️";
+
+        else if(lower.includes("chimie"))
+            icon = "🧪";
+
+
+        const card =
+            document.createElement("div");
+
+
+        card.className = "card";
+
+
+        const link =
+            "revisions/" +
+            encodeURIComponent(
+                file.name
+            );
+
+
+        card.innerHTML = `
+
+            <div class="icon">
+                ${icon}
+            </div>
+
+            <h3>
+                ${escapeHTML(nom)}
+            </h3>
+
+            <p>
+                Clique pour commencer
+            </p>
+
+            <a
+                class="start"
+                href="${link}"
+            >
+                Commencer →
+            </a>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   RECHERCHE
+===================================================== */
+
+document
+    .getElementById("search")
+    .addEventListener(
+        "input",
+        function() {
+
+            const recherche =
+                this.value
+                    .toLowerCase()
+                    .trim();
+
+
+            const resultats =
+                revisions.filter(file =>
+
+                    file.name
+                        .toLowerCase()
+                        .includes(recherche)
+
+                );
+
+
+            afficher(resultats);
+
+        }
+    );
+
+
+/* =====================================================
+   SÉCURITÉ HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+</script>
+
+</body>
+
+</html>
