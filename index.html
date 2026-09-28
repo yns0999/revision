@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>📚 Révisions</title>
+<title>📚 Mes révisions</title>
 
 <style>
 
@@ -16,25 +16,20 @@
 }
 
 body {
-
     margin: 0;
-
     min-height: 100vh;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 
     background:
         radial-gradient(
             circle at 20% 0%,
-            #263b72,
+            #263b72 0%,
             transparent 35%
         ),
         radial-gradient(
             circle at 90% 100%,
-            #3b1f65,
+            #3b1f65 0%,
             transparent 35%
         ),
         #080d18;
@@ -43,9 +38,9 @@ body {
 }
 
 
-/* =====================================================
-   ÉCRAN DE CODE
-===================================================== */
+/* ==========================================
+   ÉCRAN DU CODE
+========================================== */
 
 #login {
 
@@ -193,9 +188,9 @@ body {
 }
 
 
-/* =====================================================
+/* ==========================================
    SITE PRINCIPAL
-===================================================== */
+========================================== */
 
 #site {
 
@@ -241,9 +236,9 @@ header p {
 }
 
 
-/* =====================================================
+/* ==========================================
    RECHERCHE
-===================================================== */
+========================================== */
 
 #search {
 
@@ -282,9 +277,9 @@ header p {
 }
 
 
-/* =====================================================
+/* ==========================================
    TITRE
-===================================================== */
+========================================== */
 
 .section-title {
 
@@ -314,9 +309,9 @@ header p {
 }
 
 
-/* =====================================================
+/* ==========================================
    CARTES
-===================================================== */
+========================================== */
 
 #revisions {
 
@@ -430,6 +425,8 @@ header p {
     text-decoration: none;
 
     font-weight: bold;
+
+    transition: .2s;
 }
 
 
@@ -439,9 +436,9 @@ header p {
 }
 
 
-/* =====================================================
+/* ==========================================
    MESSAGES
-===================================================== */
+========================================== */
 
 .loading,
 .empty {
@@ -472,9 +469,9 @@ header p {
 }
 
 
-/* =====================================================
+/* ==========================================
    MOBILE
-===================================================== */
+========================================== */
 
 @media (max-width: 600px) {
 
@@ -503,9 +500,9 @@ header p {
 <body>
 
 
-<!-- =====================================================
-     ÉCRAN DE CONNEXION
-===================================================== -->
+<!-- ==========================================
+     CONNEXION
+========================================== -->
 
 <div id="login">
 
@@ -541,112 +538,98 @@ header p {
 </div>
 
 
-<!-- =====================================================
-     SITE
-===================================================== -->
+<!-- ==========================================
+     PAGE PRINCIPALE
+========================================== -->
 
 <div id="site">
 
+    <header>
 
-<header>
+        <h1>
+            📚 Mon espace de révision
+        </h1>
 
-    <h1>
-        📚 Mon espace de révision
-    </h1>
+        <p>
+            Choisis ce que tu veux réviser
+        </p>
 
-    <p>
-        Choisis ce que tu veux réviser
-    </p>
-
-</header>
-
-
-<div class="container">
+    </header>
 
 
-    <input
-        type="text"
-        id="search"
-        placeholder="🔎 Rechercher une révision..."
-    >
+    <div class="container">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="🔎 Rechercher une révision..."
+        >
 
 
-    <div class="section-title">
+        <div class="section-title">
 
-        <h2>
-            Mes révisions
-        </h2>
+            <h2>
+                Mes révisions
+            </h2>
 
-        <span id="count"></span>
+            <span id="count"></span>
 
-    </div>
+        </div>
 
 
-    <div id="revisions">
+        <div id="revisions">
 
-        <div class="loading">
-            Chargement...
+            <div class="loading">
+                Chargement des révisions...
+            </div>
+
         </div>
 
     </div>
-
-
-</div>
 
 </div>
 
 
 <script>
 
-
-/* =====================================================
-   ⚙️ CONFIGURATION
-===================================================== */
-
-
-/*
-   TON PSEUDO GITHUB
-*/
+/* ==========================================
+   CONFIGURATION
+========================================== */
 
 const USERNAME = "yns0999";
 
-
-/*
-   NOM DE TON DÉPÔT
-*/
-
 const REPOSITORY = "revision";
 
-
-/*
-   BRANCHE GITHUB
-*/
-
 const BRANCH = "main";
-
-
-/*
-   DOSSIER QUI CONTIENT TES RÉVISIONS
-*/
 
 const FOLDER = "revisions";
 
 
-/*
-   🔐 CODE D'ACCÈS
-
-   TU PEUX LE CHANGER ICI.
-
-   Exemple :
-   1234
-*/
+/* ==========================================
+   CODE D'ACCÈS
+========================================== */
 
 const CODE_ACCES = "2101";
 
 
-/* =====================================================
+/* ==========================================
+   URL DE BASE DU SITE
+========================================== */
+
+const SITE_BASE =
+    "/revision/";
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let revisions = [];
+
+
+/* ==========================================
    CONNEXION
-===================================================== */
+========================================== */
 
 const codeInput =
     document.getElementById("codeInput");
@@ -660,7 +643,11 @@ const error =
 
 function connexion() {
 
-    if (codeInput.value === CODE_ACCES) {
+    const code =
+        codeInput.value.trim();
+
+
+    if (code === CODE_ACCES) {
 
         document.getElementById("login").style.display =
             "none";
@@ -696,7 +683,7 @@ codeInput.addEventListener(
     "keydown",
     function(event) {
 
-        if(event.key === "Enter") {
+        if (event.key === "Enter") {
 
             connexion();
 
@@ -706,12 +693,9 @@ codeInput.addEventListener(
 );
 
 
-/* =====================================================
-   RÉVISIONS
-===================================================== */
-
-let revisions = [];
-
+/* ==========================================
+   CHARGER LES RÉVISIONS DEPUIS GITHUB
+========================================== */
 
 async function loadRevisions() {
 
@@ -721,18 +705,25 @@ async function loadRevisions() {
 
     try {
 
-        const url =
-            `https://api.github.com/repos/${USERNAME}/${REPOSITORY}/contents/${FOLDER}?ref=${BRANCH}`;
+        const apiURL =
+            "https://api.github.com/repos/" +
+            USERNAME +
+            "/" +
+            REPOSITORY +
+            "/contents/" +
+            FOLDER +
+            "?ref=" +
+            BRANCH;
 
 
         const response =
-            await fetch(url);
+            await fetch(apiURL);
 
 
-        if(!response.ok) {
+        if (!response.ok) {
 
             throw new Error(
-                "Impossible de charger les révisions."
+                "Dossier revisions introuvable"
             );
 
         }
@@ -742,30 +733,34 @@ async function loadRevisions() {
             await response.json();
 
 
-        revisions = files
+        revisions =
+            files
+                .filter(function(file) {
 
-            .filter(file =>
+                    return (
+                        file.type === "file" &&
+                        file.name
+                            .toLowerCase()
+                            .endsWith(".html")
+                    );
 
-                file.type === "file" &&
+                })
+                .sort(function(a, b) {
 
-                file.name
-                    .toLowerCase()
-                    .endsWith(".html")
+                    return a.name.localeCompare(
+                        b.name
+                    );
 
-            )
-
-            .sort((a,b) =>
-                a.name.localeCompare(b.name)
-            );
+                });
 
 
         afficher(revisions);
 
     }
 
-    catch(error) {
+    catch (err) {
 
-        console.error(error);
+        console.error(err);
 
 
         container.innerHTML = `
@@ -781,8 +776,8 @@ async function loadRevisions() {
                 </h3>
 
                 <p>
-                    Vérifie que tes fichiers sont
-                    bien dans le dossier
+                    Vérifie que tes fichiers sont bien
+                    dans le dossier
                     <strong>revisions</strong>.
                 </p>
 
@@ -795,15 +790,14 @@ async function loadRevisions() {
 }
 
 
-/* =====================================================
+/* ==========================================
    AFFICHER LES CARTES
-===================================================== */
+========================================== */
 
 function afficher(files) {
 
     const container =
         document.getElementById("revisions");
-
 
     const count =
         document.getElementById("count");
@@ -816,12 +810,12 @@ function afficher(files) {
         files.length +
         (
             files.length > 1
-            ? " révisions"
-            : " révision"
+                ? " révisions"
+                : " révision"
         );
 
 
-    if(files.length === 0) {
+    if (files.length === 0) {
 
         container.innerHTML = `
 
@@ -836,8 +830,7 @@ function afficher(files) {
                 </h3>
 
                 <p>
-                    Ajoute tes fichiers HTML
-                    dans le dossier
+                    Ajoute tes fichiers HTML dans
                     <strong>revisions</strong>.
                 </p>
 
@@ -850,54 +843,87 @@ function afficher(files) {
     }
 
 
-    files.forEach(file => {
+    files.forEach(function(file) {
 
+
+        /* ==============================
+           NOM DU FICHIER
+        ============================== */
 
         let nom =
             file.name
-
-                .replace(".html", "")
-
+                .replace(/\.html$/i, "")
                 .replace(/[-_]/g, " ")
-
                 .replace(
                     /\b\w/g,
-                    lettre =>
-                        lettre.toUpperCase()
+                    function(lettre) {
+                        return lettre.toUpperCase();
+                    }
                 );
 
 
-        let icon = "📖";
+        /* ==============================
+           ICÔNE
+        ============================== */
 
+        let icon = "📖";
 
         const lower =
             file.name.toLowerCase();
 
 
-        if(lower.includes("anglais"))
+        if (lower.includes("anglais")) {
+
             icon = "🇬🇧";
 
-        else if(lower.includes("espagnol"))
+        }
+
+        else if (lower.includes("espagnol")) {
+
             icon = "🇪🇸";
 
-        else if(lower.includes("allemand"))
+        }
+
+        else if (lower.includes("allemand")) {
+
             icon = "🇩🇪";
 
-        else if(lower.includes("math"))
+        }
+
+        else if (lower.includes("math")) {
+
             icon = "🔢";
 
-        else if(lower.includes("histoire"))
+        }
+
+        else if (lower.includes("histoire")) {
+
             icon = "📚";
 
-        else if(lower.includes("svt"))
+        }
+
+        else if (lower.includes("svt")) {
+
             icon = "🧬";
 
-        else if(lower.includes("physique"))
+        }
+
+        else if (lower.includes("physique")) {
+
             icon = "⚛️";
 
-        else if(lower.includes("chimie"))
+        }
+
+        else if (lower.includes("chimie")) {
+
             icon = "🧪";
 
+        }
+
+
+        /* ==============================
+           CARTE
+        ============================== */
 
         const card =
             document.createElement("div");
@@ -906,11 +932,25 @@ function afficher(files) {
         card.className = "card";
 
 
+        /*
+           IMPORTANT :
+
+           Ton site est :
+
+           /revision/
+
+           Ton fichier est :
+
+           /revision/revisions/anglais.html
+
+           On construit donc le lien
+           avec SITE_BASE.
+        */
+
         const link =
+            SITE_BASE +
             "revisions/" +
-            encodeURIComponent(
-                file.name
-            );
+            encodeURIComponent(file.name);
 
 
         card.innerHTML = `
@@ -944,9 +984,9 @@ function afficher(files) {
 }
 
 
-/* =====================================================
+/* ==========================================
    RECHERCHE
-===================================================== */
+========================================== */
 
 document
     .getElementById("search")
@@ -961,13 +1001,13 @@ document
 
 
             const resultats =
-                revisions.filter(file =>
+                revisions.filter(function(file) {
 
-                    file.name
+                    return file.name
                         .toLowerCase()
-                        .includes(recherche)
+                        .includes(recherche);
 
-                );
+                });
 
 
             afficher(resultats);
@@ -976,9 +1016,9 @@ document
     );
 
 
-/* =====================================================
-   SÉCURITÉ HTML
-===================================================== */
+/* ==========================================
+   PROTECTION DU HTML
+========================================== */
 
 function escapeHTML(text) {
 
